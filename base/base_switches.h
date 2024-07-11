@@ -64,6 +64,7 @@ extern const char kPackageVersionName[];
 extern const char kSchedulerBoostUrgent[];
 #endif
 
+extern const char kDisableAddressBar[];
 }  // namespace switches
 
 #endif  // BASE_BASE_SWITCHES_H_

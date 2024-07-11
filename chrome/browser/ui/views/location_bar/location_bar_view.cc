@@ -9,6 +9,8 @@
 #include <memory>
 #include <utility>
 
+#include "base/base_switches.h"
+#include "base/command_line.h"
 #include "base/containers/adapters.h"
 #include "base/feature_list.h"
 #include "base/functional/bind.h"
@@ -227,6 +229,11 @@ LocationBarView::LocationBarView(Browser* browser,
 
 LocationBarView::~LocationBarView() = default;
 
+// Method to disable the Omnibox
+void LocationBarView::DisableOmnibox() {
+  omnibox_view_->SetEnabled(false);
+}
+
 void LocationBarView::Init() {
   // We need to be in a Widget, otherwise GetNativeTheme() may change and we're
   // not prepared for that.
@@ -279,7 +286,10 @@ void LocationBarView::Init() {
   // the former will focus the latter. In order to receive |ShowContextMenu()|
   // requests, LocationBarView must have a context menu controller.
   set_context_menu_controller(omnibox_view_->context_menu_controller());
-
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kDisableAddressBar)) {
+    DisableOmnibox();
+  }
   RefreshBackground();
 
   // Initialize the IME autocomplete labels which are visible only when IME is
