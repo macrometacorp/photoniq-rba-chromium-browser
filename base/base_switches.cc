@@ -185,4 +185,7 @@ const char kPackageVersionName[] = "package-version-name";
 const char kSchedulerBoostUrgent[] = "scheduler-boost-urgent";
 #endif
 
+// Will check whether the location bar view needs to be disabled.
+const char kDisableAddressBar[] = "disable-address-bar";
+
 }  // namespace switches
