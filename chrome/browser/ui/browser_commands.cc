@@ -9,6 +9,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/logging.h"
 #include "base/check.h"
 #include "base/command_line.h"
 #include "base/feature_list.h"
@@ -520,6 +521,7 @@ bool SupportsCommand(Browser* browser, int command) {
 }
 
 bool ExecuteCommand(Browser* browser, int command, base::TimeTicks time_stamp) {
+  LOG(ERROR) << "EXECUTE COMMAND: " << command;
   return browser->command_controller()->ExecuteCommand(command, time_stamp);
 }
 

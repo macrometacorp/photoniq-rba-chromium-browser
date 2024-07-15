@@ -9,8 +9,10 @@
 
 #include "base/check.h"
 #include "base/observer_list.h"
+#include "base/logging.h"
 #include "chrome/browser/command_observer.h"
 #include "chrome/browser/command_updater_delegate.h"
+#include "chrome/app/chrome_command_ids.h"
 
 struct CommandUpdaterImpl::Command {
   // Empty optional means not specified yet and thus implicitly disabled.
@@ -26,7 +28,17 @@ CommandUpdaterImpl::~CommandUpdaterImpl() {
 }
 
 bool CommandUpdaterImpl::SupportsCommand(int id) const {
-  return commands_.find(id) != commands_.end();
+  const auto found = commands_.find(id) != commands_.end();
+  
+  if (id == IDC_NEW_TAB) {
+    if (found) {
+      LOG(ERROR) << "IDC NEW TAB SUPPORTED";
+    } else {
+      LOG(ERROR) << "IDC NEW TAB NOT SUPPORTED";
+    }
+  }
+
+  return found;
 }
 
 bool CommandUpdaterImpl::IsCommandEnabled(int id) const {
@@ -34,10 +46,22 @@ bool CommandUpdaterImpl::IsCommandEnabled(int id) const {
   if (command == commands_.end() || command->second->enabled == std::nullopt) {
     return false;
   }
-  return *command->second->enabled;
+
+  const auto enabled = *command->second->enabled;
+
+  if (id == IDC_NEW_TAB) {
+    if (enabled) {
+      LOG(ERROR) << "IDC NEW TAB IS ENABLED";
+    } else {
+      LOG(ERROR) << "IDC NEW TAB IS NOT ENABLED";
+    }
+  }
+
+  return enabled;
 }
 
 bool CommandUpdaterImpl::ExecuteCommand(int id, base::TimeTicks time_stamp) {
+  LOG(ERROR) << "COMMAND EXECUTED: " << id;
   return ExecuteCommandWithDisposition(id, WindowOpenDisposition::CURRENT_TAB,
                                        time_stamp);
 }
@@ -71,6 +95,13 @@ void CommandUpdaterImpl::RemoveCommandObserver(CommandObserver* observer) {
 }
 
 bool CommandUpdaterImpl::UpdateCommandEnabled(int id, bool enabled) {
+  if (id == IDC_NEW_TAB) {
+    if (enabled) {
+      LOG(ERROR) << "IDC NEW TAB ENABLE!";
+    } else {
+      LOG(ERROR) << "IDC NEW TAB DISABLE!";
+    }
+  }
   Command* command = GetCommand(id, true);
   if (command->enabled.has_value() && *command->enabled == enabled)
     return true;  // Nothing to do.

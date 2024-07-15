@@ -81,10 +81,11 @@ BEGIN_METADATA(FrameGrabHandle)
 END_METADATA
 
 bool ShouldShowNewTabButton(const Browser* browser) {
+  return false;
   // `browser` can be null in tests and `app_controller` will be null if
   // the browser is not for an app.
-  return !browser || !browser->app_controller() ||
-         !browser->app_controller()->ShouldHideNewTabButton();
+  // return !browser || !browser->app_controller() ||
+  //        !browser->app_controller()->ShouldHideNewTabButton();
 }
 
 }  // namespace

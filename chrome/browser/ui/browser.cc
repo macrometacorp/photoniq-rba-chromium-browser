@@ -1367,6 +1367,7 @@ WebContents* Browser::OpenURL(
     const OpenURLParams& params,
     base::OnceCallback<void(content::NavigationHandle&)>
         navigation_handle_callback) {
+  LOG(ERROR) << "CALLED: Browser::OpenURL";
 #if DCHECK_IS_ON()
   DCHECK(params.Valid());
 #endif

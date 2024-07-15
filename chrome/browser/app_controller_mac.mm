@@ -1695,6 +1695,7 @@ class AppControllerNativeThemeObserver : public ui::NativeThemeObserver {
 
 - (void)initMenuState {
   _menuState = std::make_unique<CommandUpdaterImpl>(nullptr);
+  //_menuState->UpdateCommandEnabled(IDC_NEW_TAB, false);
   _menuState->UpdateCommandEnabled(IDC_NEW_TAB, true);
   _menuState->UpdateCommandEnabled(IDC_NEW_WINDOW, true);
   _menuState->UpdateCommandEnabled(IDC_NEW_INCOGNITO_WINDOW, true);

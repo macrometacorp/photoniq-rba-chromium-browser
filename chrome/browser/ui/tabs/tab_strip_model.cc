@@ -945,6 +945,8 @@ void TabStripModel::AddTab(std::unique_ptr<tabs::TabModel> tab,
                            ui::PageTransition transition,
                            int add_types,
                            std::optional<tab_groups::TabGroupId> group) {
+  base::debug::StackTrace stack_trace;
+  LOG(ERROR) << "CALLED: TabStripModel::AddTab! STACK TRACE: " << stack_trace.ToString();
   for (auto& observer : observers_)
     observer.OnTabWillBeAdded();
 
