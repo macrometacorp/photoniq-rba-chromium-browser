@@ -329,6 +329,7 @@ class LocationBarView
   LocationBarTesting* GetLocationBarForTesting() override;
   void OnChanged() override;
   void OnPopupVisibilityChanged() override;
+  void DisableOmnibox();
 
   // LocationBarTesting:
   bool TestContentSettingImagePressed(size_t index) override;
